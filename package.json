@@ -1,0 +1,18 @@
+{
+  "name": "mongodb-social-api",
+  "description": "An API utilizing MongoDB for a simple social media application that allows users to make posts, add friends, and comment on other user's posts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Travis Umbel",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.3.0"
+  }
+}
