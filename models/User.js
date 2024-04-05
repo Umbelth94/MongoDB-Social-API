@@ -1,20 +1,41 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
+// const mongoose = require('mongoose');
 
 //Create a new instance of the Mongoose Schema to define shape of our document
 const userSchema = new mongoose.Schema({
-    name: { type: String, required:true},
-    email: String,
+    name: { 
+        type: String, 
+        required:true, 
+        trim: true, 
+        unique: true 
+    },
+    email: {
+        type: String,
+        required: true,
+        Unique: true,
+        //Email Validation Regex
+        match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    },
+    thoughts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'post',
+        }],
+    friends: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'user'
+        }],
     lastAccessed: {type: Date, default: Date.now}
 })
 
-const User = mongoose.model('User', userSchema);
+//Virtual to get the count on a user's number of friends
+userSchema.virtual('friendCount').get(function (){
+    return this.friends.length;
+})
 
-const handleError = (err) => console.error(err);
 
-User.create({
-    name: 'Veronica',
-    email: 'veronica@gg.com'
-}).then ( result => console.log('Created new document', result))
-.catch(err => handleError(err));
+
+const User = model('User', userSchema);
 
 module.exports = User;
