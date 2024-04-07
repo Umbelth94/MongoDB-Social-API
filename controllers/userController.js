@@ -53,10 +53,47 @@ module.exports = {
             return res.status(500).json({error: 'Internal server error'});
         }
     },
-    //Delete an existing user
-    async deleteUser(req, res) {
+    //Delete an existing user (This doesn't work yet)
+    async deleteUserAndThoughts(req, res) {
         try {
-            const user = await User.findOneAndDelete({_id: req.params.userId});
+            const user = await User.findOneAndRemove({_id: req.params.userId});
+
+            if (!user) {
+                throw new Error('User not found');
+            }
+
+            //Extract the IDs of the thoughts associated with the user
+            const thoughtIds = user.thoughts;
+
+            //Delete the thoughts using their IDs
+            await Thought.deleteMany({ _id: {$in: thoughtIds}})
+
+
+            res.json(user);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+    },
+    //Add a friend to a user
+    async addFriend(req, res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                {_id: req.params.userId}, 
+                {$addToSet: {friends: req.params.friendId}}, 
+                {new: true});
+            res.json(user);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+    },
+    //Remove a friend from a user
+    async removeFriend(req, res) {
+        try {
+            const user = await User.findOneAndUpdate({_id: req.params.userId}, 
+                {$pull: {friends: req.params.friendId}}, 
+                {new: true});
             res.json(user);
         } catch (error) {
             console.log(error);
