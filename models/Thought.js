@@ -7,7 +7,7 @@ const reactionSchema = new mongoose.Schema({
         //use mongoose's ObjectId data type
         //default value is set to a new ObjectId
         type: mongoose.Schema.Types.ObjectId,
-        default: mongoose.Types.ObjectId
+        default: () => mongoose.Types.ObjectId(),
     },
     reactionBody: {
         type: String,
