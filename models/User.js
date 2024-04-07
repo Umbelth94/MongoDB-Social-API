@@ -26,8 +26,18 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'user'
         }],
+        // toJSON: {
+        //     virtuals: true
+        // },
     lastAccessed: {type: Date, default: Date.now}
-})
+    },
+    {   
+        //Include the virtuals in the JSON response
+        toJSON: {
+            virtuals: true
+        }
+    }
+)
 
 //Virtual to get the count on a user's number of friends
 userSchema.virtual('friendCount').get(function (){

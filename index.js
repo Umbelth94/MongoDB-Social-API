@@ -1,23 +1,23 @@
 const express = require('express');
 const db = require('./config/connection.js');
 const { User } = require('./models')
-// const routes = require('./routes');
+const routes = require('./routes');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-// app.use(routes);
+app.use(routes);
 
-app.get('/users', async (req, res) => {
-    try {
-        const result = await User.find({});
-        res.status(200).json(result);
-    } catch (err) {
-        res.status(500).send({message: 'Internal Server Error'});
-    }
-})
+// app.get('/users', async (req, res) => {
+//     try {
+//         const result = await User.find({});
+//         res.status(200).json(result);
+//     } catch (err) {
+//         res.status(500).send({message: 'Internal Server Error'});
+//     }
+// })
 
 db.once('open', () => {
     app.listen(PORT, () => {
