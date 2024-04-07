@@ -33,7 +33,11 @@ const userSchema = new Schema(
     {   
         //Include the virtuals in the JSON response
         toJSON: {
-            virtuals: true
+            virtuals: true,
+            versionKey: false, //Exclude the --v field from the JSON response
+            transform: function (doc, ret) {
+                delete ret.id;
+            }
         }
     }
 )

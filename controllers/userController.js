@@ -32,5 +32,27 @@ module.exports = {
             console.log(error);
             return res.status(500).json({error: 'Internal server error'});
         }
-    }
+    },
+    //Create a new user
+    async createUser(req, res) {
+        try {
+            const user = await User.create(req.body);
+            res.json(user);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+    },
+    //Update an existing user
+    async updateUser(req, res) {
+        try {
+            const user = await User.findOneAndUpdate({_id: req.params.userId}, req.body, {new: true});
+            res.json(user);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+    },
+    //Delete an existing user
+    
 }
