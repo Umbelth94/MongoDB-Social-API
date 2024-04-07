@@ -1,5 +1,5 @@
-const { Schema, model } = require('mongoose');
-// const mongoose = require('mongoose');
+// const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
 
 //Create a new instance of the Mongoose Schema to define shape of our document
 const userSchema = new mongoose.Schema({
@@ -18,12 +18,12 @@ const userSchema = new mongoose.Schema({
     },
     thoughts: [
         {
-            type: Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'post',
         }],
     friends: [
         {
-            type: Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'user'
         }],
     lastAccessed: {type: Date, default: Date.now}
@@ -36,6 +36,6 @@ userSchema.virtual('friendCount').get(function (){
 
 
 
-const User = model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
