@@ -54,5 +54,13 @@ module.exports = {
         }
     },
     //Delete an existing user
-    
+    async deleteUser(req, res) {
+        try {
+            const user = await User.findOneAndDelete({_id: req.params.userId});
+            res.json(user);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+    },
 }
