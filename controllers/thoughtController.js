@@ -60,17 +60,21 @@ async getAllThoughts(req, res) {
                 return res.status(404).json({ message: 'User not found' });
             }
 
-
+            const userName = user.username;
     
             // Step 2: Create the thought using the user's ObjectId
             const thoughtData = {
                 thoughtText: req.body.thoughtText,
-                username: req.body.username, // Use the user's ObjectId as the username for now.  
+                username: userName, // Use the user's ObjectId as the username for now.  
                 userId: user._id 
             };
-    
+            
+            // Create the thought
             const thought = await Thought.create(thoughtData);
     
+            //Push the thought's ID to the user's thoughts array
+            user.thoughts.push(thought._id);
+            await user.save();
             // Send a response with the created thought
             res.json(thought);
         } catch (error) {
