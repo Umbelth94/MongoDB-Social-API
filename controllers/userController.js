@@ -56,7 +56,7 @@ module.exports = {
     //Delete an existing user (This doesn't work yet)
     async deleteUserAndThoughts(req, res) {
         try {
-            const user = await User.findOneAndRemove({_id: req.params.userId});
+            const user = await User.findOneAndDelete({_id: req.params.userId});
 
             if (!user) {
                 throw new Error('User not found');
