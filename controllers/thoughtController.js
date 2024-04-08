@@ -6,19 +6,6 @@ module.exports = {
 async getAllThoughts(req, res) {
     try {
         const thoughts = await Thought.find()
-            // .populate({
-            //     path: 'username',
-            //     // select: 'username' // Only select the username field from the User model
-            // })
-            // .populate({
-            //     path: 'reactions',
-            //     populate: {
-            //         path: 'username',
-            //         // select: 'username' // Only select the username field from the User model
-            //     }
-            // })
-
-
         console.log(thoughts);
         res.json(thoughts);
     } catch (error) {
@@ -33,10 +20,6 @@ async getAllThoughts(req, res) {
             .populate(
                 {
                     path: 'reactions',
-                    populate: {
-                        path: 'username',
-                        select: 'username'
-                    }
         });
 
             if (!thought) {
@@ -93,4 +76,35 @@ async getAllThoughts(req, res) {
         }
     },
     //Delete an existing thought
+    async deleteThoughtById(req, res) {
+        try {
+            const thought = await Thought.findOneAndDelete({_id: req.params.thoughtId});
+            res.json(thought);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+    },
+
+    //Add a reaction to an existing thought
+    async addReaction(req, res) {
+        try {
+            const thought = await Thought.findOneAndUpdate({_id: req.params.thoughtId}, {$push: {reactions: req.body}}, {new: true});
+            res.json(thought);
+        } catch {
+            console.log(error);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+    },
+
+    //Delete a reaction from an existing thought
+    async deleteReaction(req, res) {
+        try {
+            const thought = await Thought.findOneAndUpdate({_id: req.params.thoughtId}, {$pull: {reactions: {reactionId: req.params.reactionId}}}, {new: true});
+            res.json(thought);
+        } catch {
+            console.log(error);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+    }
 }
