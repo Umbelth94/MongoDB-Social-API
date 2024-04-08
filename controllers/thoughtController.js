@@ -6,17 +6,18 @@ module.exports = {
 async getAllThoughts(req, res) {
     try {
         const thoughts = await Thought.find()
-            .populate({
-                path: 'username',
-                select: 'username' // Only select the username field from the User model
-            })
-            .populate({
-                path: 'reactions',
-                populate: {
-                    path: 'username',
-                    select: 'username' // Only select the username field from the User model
-                }
-            });
+            // .populate({
+            //     path: 'username',
+            //     // select: 'username' // Only select the username field from the User model
+            // })
+            // .populate({
+            //     path: 'reactions',
+            //     populate: {
+            //         path: 'username',
+            //         // select: 'username' // Only select the username field from the User model
+            //     }
+            // })
+
 
         console.log(thoughts);
         res.json(thoughts);
@@ -62,8 +63,8 @@ async getAllThoughts(req, res) {
             // Step 2: Create the thought using the user's ObjectId
             const thoughtData = {
                 thoughtText: req.body.thoughtText,
-                username: user._id, // Use the user's ObjectId as the username
-                userId: user._id // Optionally, you can also provide the userId if needed
+                username: user._id, // Use the user's ObjectId as the username for now.  
+                userId: user._id 
             };
     
             const thought = await Thought.create(thoughtData);

@@ -15,7 +15,7 @@ const reactionSchema = new mongoose.Schema({
         minLength: 1,
         maxLength: 280,
     },
-    user: {
+    username: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
