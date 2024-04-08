@@ -53,7 +53,7 @@ async getAllThoughts(req, res) {
     //Create a new thought
     async createThought(req, res) {
         try {
-            // Step 1: Find the user based on the provided username
+            // Find the user based on the provided username
             const user = await User.findOne({ _id: req.body.userId });
     
             if (!user) {
@@ -62,7 +62,7 @@ async getAllThoughts(req, res) {
 
             const userName = user.username;
     
-            // Step 2: Create the thought using the user's ObjectId
+            // Create the thought using the user's ObjectId
             const thoughtData = {
                 thoughtText: req.body.thoughtText,
                 username: userName, // Use the user's ObjectId as the username for now.  
