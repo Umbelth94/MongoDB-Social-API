@@ -16,12 +16,12 @@ async function seedData() {
     // Create thoughts
     const thought1 = await Thought.create({
       thoughtText: 'Thought by User1',
-      username: user1._id,
+      username: user1.username,
     });
 
     const thought2 = await Thought.create({
       thoughtText: 'Thought by User2',
-      username: user2._id,
+      username: user2.username,
     });
 
     // Add thoughts to users in the database
@@ -38,11 +38,11 @@ async function seedData() {
 
     // Create reactions
     await Thought.findByIdAndUpdate(thought1._id, {
-      $push: { reactions: { reactionBody: 'Reaction to thought1 by User3', username: user3._id } },
+      $push: { reactions: { reactionBody: 'Reaction to thought1 by User3', username: user3.username } },
     });
 
     await Thought.findByIdAndUpdate(thought2._id, {
-      $push: { reactions: { reactionBody: 'Reaction to thought2 by User3', username: user3._id } },
+      $push: { reactions: { reactionBody: 'Reaction to thought2 by User3', username: user3.username } },
     });
 
     console.log('Data seeded successfully');

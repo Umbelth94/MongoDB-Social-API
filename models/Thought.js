@@ -16,8 +16,7 @@ const reactionSchema = new mongoose.Schema({
         maxLength: 280,
     },
     username: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        type: String,
         required: true
     },
     createdAt: {
@@ -47,8 +46,7 @@ const thoughtSchema = new mongoose.Schema({
         }
        },
     username: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        type: String,
         required: true
     },
     reactions: [reactionSchema],
