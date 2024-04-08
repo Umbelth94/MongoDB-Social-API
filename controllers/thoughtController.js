@@ -20,7 +20,7 @@ async getAllThoughts(req, res) {
             .populate(
                 {
                     path: 'reactions',
-        });
+                });
 
             if (!thought) {
                 return res.status(404).json({message: 'No thought with that ID'})
